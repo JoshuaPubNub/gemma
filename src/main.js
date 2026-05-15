@@ -327,7 +327,7 @@ els.newChat.addEventListener('click', newConversation);
 els.prompt.addEventListener('input', updateSendEnabled);
 
 els.prompt.addEventListener('keydown', (e) => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
     e.preventDefault();
     els.composer.requestSubmit();
   }

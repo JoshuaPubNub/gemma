@@ -1,5 +1,5 @@
 import './style.css';
-import { TaskClient, textPart } from '@blocks-network/sdk';
+import { TaskClient, textPart, filePart } from '@blocks-network/sdk';
 
 const AGENT_NAME = '5090_gemma_4';
 const BILLING_MODE = 'paid';
@@ -301,10 +301,22 @@ async function sendPrompt(promptText, images) {
   try {
     const client = await getClient();
     const payload = { prompt: promptText, max_tokens: state.maxTokens };
-    if (images && images.length) payload.images = images;
+    const parts = [textPart(JSON.stringify(payload), 'request')];
+    for (let i = 0; i < (images || []).length; i++) {
+      const bin = atob(images[i]);
+      const bytes = new Uint8Array(bin.length);
+      for (let j = 0; j < bin.length; j++) bytes[j] = bin.charCodeAt(j);
+      parts.push(
+        filePart(bytes, {
+          partId: 'image',
+          contentType: 'image/jpeg',
+          fileName: `image-${i}.jpg`,
+        })
+      );
+    }
     const session = await client.sendMessage({
       agentName: AGENT_NAME,
-      requestParts: [textPart(JSON.stringify(payload), 'request')],
+      requestParts: parts,
     });
 
     const terminal = await session.waitForTerminal(180_000);

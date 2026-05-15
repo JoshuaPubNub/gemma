@@ -298,3 +298,41 @@ body.drag-over {
   padding: 60px 20px;
   font-size: 14px;
 }
+
+.welcome {
+  max-width: 560px;
+  margin: 60px auto;
+  padding: 32px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+}
+.welcome h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: var(--accent-2);
+}
+.welcome .lead {
+  margin: 0 0 20px;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.welcome ol {
+  margin: 0 0 20px;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+.welcome ol li { margin-bottom: 8px; }
+.welcome a {
+  color: var(--accent-2);
+  text-decoration: underline;
+}
+.welcome a:hover { color: var(--accent); }
+.welcome .small {
+  font-size: 12px;
+  margin: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}

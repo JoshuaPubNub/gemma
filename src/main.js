@@ -115,16 +115,50 @@ function renderMessages() {
   const c = activeConv();
   els.messages.innerHTML = '';
   if (!c) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = state.conversations.length === 0
-      ? 'no conversations yet — paste your API key above and start a new chat.'
-      : 'pick a conversation from the sidebar, or start a new one.';
-    els.messages.appendChild(empty);
+    if (state.conversations.length === 0 && !state.apiKey) {
+      els.messages.appendChild(renderWelcome());
+    } else if (state.conversations.length === 0) {
+      els.messages.appendChild(renderReadyState());
+    } else {
+      const e = document.createElement('div');
+      e.className = 'empty';
+      e.textContent = 'pick a conversation from the sidebar, or start a new one.';
+      els.messages.appendChild(e);
+    }
     return;
   }
   for (const m of c.messages) renderMessage(m);
   els.messages.scrollTop = els.messages.scrollHeight;
+}
+
+function renderWelcome() {
+  const w = document.createElement('div');
+  w.className = 'welcome';
+  w.innerHTML = `
+    <h2>Welcome to Gemma on a 5090</h2>
+    <p class="lead">Chat with <strong>Gemma 4</strong> (Google's 26B-parameter model) running on an NVIDIA 5090 GPU at a desk in the UK.</p>
+    <ol>
+      <li>Sign up at <a href="https://app.blocks.ai" target="_blank" rel="noopener">app.blocks.ai</a> and grab your API key.</li>
+      <li>Paste it into the field at the top of this page and click <strong>save</strong>.</li>
+      <li>Click <strong>+ new chat</strong> in the sidebar and start asking. <strong>First 3 messages free</strong>, then <strong>$0.01</strong> each.</li>
+    </ol>
+    <p class="muted small">
+      You can paste or drop images into the chat — Gemma can see them.<br />
+      Your API key and chat history live in this browser only.
+    </p>
+  `;
+  return w;
+}
+
+function renderReadyState() {
+  const w = document.createElement('div');
+  w.className = 'welcome';
+  w.innerHTML = `
+    <h2>You're set up.</h2>
+    <p class="lead">Click <strong>+ new chat</strong> in the sidebar to start.</p>
+    <p class="muted small">Tip: paste or drop images straight into the chat — Gemma can see them.</p>
+  `;
+  return w;
 }
 
 function renderMessage(m) {
@@ -314,6 +348,7 @@ els.saveKey.addEventListener('click', () => {
   els.keyStatus.textContent = state.apiKey ? 'saved' : 'cleared';
   if (state.client) { try { state.client.destroy(); } catch {} state.client = null; }
   updateSendEnabled();
+  renderMessages();
 });
 
 els.maxTokens.addEventListener('input', (e) => {

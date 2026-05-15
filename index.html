@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gemma — 5090</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Gemma <span class="sub">on a 5090</span></h1>
+        <div class="key-row">
+          <input id="apiKey" type="password" placeholder="paste your Blocks API key (bk_...)" autocomplete="off" />
+          <button id="saveKey">save</button>
+          <span id="keyStatus" class="muted"></span>
+        </div>
+      </header>
+
+      <aside id="sidebar">
+        <button id="newChat">+ new chat</button>
+        <ul id="convList"></ul>
+        <div class="settings">
+          <label>
+            <span>max tokens: <strong id="mtVal">1024</strong></span>
+            <input id="maxTokens" type="range" min="256" max="4096" step="64" value="1024" />
+          </label>
+        </div>
+        <p class="muted footer">
+          Calls <code>5090_gemma_4</code> on Blocks Network.<br />
+          $0.01/task after 3 free trials.<br />
+          Your key + history live in this browser only.
+        </p>
+      </aside>
+
+      <main id="chat">
+        <div id="messages"></div>
+        <form id="composer">
+          <textarea id="prompt" placeholder="ask Gemma…  (⌘/ctrl+Enter to send)" rows="3"></textarea>
+          <div class="composer-row">
+            <span id="composerHint" class="muted"></span>
+            <button id="send" type="submit" disabled>send</button>
+          </div>
+        </form>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

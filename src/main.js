@@ -160,10 +160,6 @@ function setBusy(b) {
 }
 
 async function sendPrompt(promptText) {
-  if (!state.apiKey) {
-    pushSystemMessage('paste your Blocks API key first.');
-    return;
-  }
   let c = activeConv();
   if (!c) { newConversation(); c = activeConv(); }
 
@@ -250,10 +246,24 @@ els.prompt.addEventListener('keydown', (e) => {
   }
 });
 
+function flashKeyStatus(msg) {
+  els.keyStatus.textContent = msg;
+  els.keyStatus.style.color = 'var(--accent-2)';
+  setTimeout(() => {
+    els.keyStatus.style.color = '';
+    els.keyStatus.textContent = state.apiKey ? 'saved' : '';
+  }, 3000);
+}
+
 els.composer.addEventListener('submit', (e) => {
   e.preventDefault();
   const text = els.prompt.value.trim();
   if (!text || state.busy) return;
+  if (!state.apiKey) {
+    flashKeyStatus('← paste your Blocks API key first');
+    els.apiKey.focus();
+    return;
+  }
   els.prompt.value = '';
   sendPrompt(text);
 });

@@ -181,7 +181,7 @@ async function sendPrompt(promptText) {
     const client = await getClient();
     const session = await client.sendMessage({
       agentName: AGENT_NAME,
-      requestParts: [textPart(JSON.stringify({ prompt: promptText, max_tokens: state.maxTokens }))],
+      requestParts: [textPart(JSON.stringify({ prompt: promptText, max_tokens: state.maxTokens }), 'request')],
     });
 
     const terminal = await session.waitForTerminal(120_000);

@@ -300,7 +300,10 @@ async function sendPrompt(promptText, images) {
   setBusy(true);
   try {
     const client = await getClient();
-    const payload = { prompt: promptText, max_tokens: state.maxTokens };
+    const history = c.messages
+      .filter((m) => (m.role === 'user' || m.role === 'assistant') && !m.thinking)
+      .map((m) => ({ role: m.role, content: m.content }));
+    const payload = { messages: history, max_tokens: state.maxTokens };
     const parts = [textPart(JSON.stringify(payload), 'request')];
     for (let i = 0; i < (images || []).length; i++) {
       const bin = atob(images[i]);

@@ -35,8 +35,11 @@
       <main id="chat">
         <div id="messages"></div>
         <form id="composer">
-          <textarea id="prompt" placeholder="ask Gemma…  (⌘/ctrl+Enter to send)" rows="3"></textarea>
+          <div id="imagePreview" class="image-preview"></div>
+          <textarea id="prompt" placeholder="ask Gemma…  paste/drop images, ⌘/ctrl+Enter to send" rows="3"></textarea>
           <div class="composer-row">
+            <button id="attach" type="button" title="attach image">📎 image</button>
+            <input id="fileInput" type="file" accept="image/*" multiple hidden />
             <span id="composerHint" class="muted"></span>
             <button id="send" type="submit" disabled>send</button>
           </div>

@@ -229,6 +229,65 @@ button:disabled { background: var(--panel-2); color: var(--muted); cursor: not-a
   justify-content: space-between;
   align-items: center;
   margin-top: 8px;
+  gap: 8px;
+}
+
+.composer-row #attach {
+  background: var(--panel-2);
+  color: var(--text);
+  font-size: 12px;
+}
+.composer-row #composerHint { flex: 1; }
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.image-preview:empty { display: none; }
+
+.image-preview .thumb {
+  position: relative;
+  width: 72px; height: 72px;
+}
+.image-preview .thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.image-preview .thumb button {
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1;
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.gallery img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  object-fit: contain;
+  background: var(--bg);
+}
+
+body.drag-over {
+  outline: 3px dashed var(--accent);
+  outline-offset: -8px;
 }
 
 .muted { color: var(--muted); font-size: 12px; }
